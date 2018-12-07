@@ -1,11 +1,9 @@
 #!/bin/bash
-set -e
+set -ue -o pipefail
 FOLDER_TO_HIDE=secure
 cd ~/.password-store
 if [ ! -d "$FOLDER_TO_HIDE" ]; then
-  gpg --output $FOLDER_TO_HIDE.tar --decrypt $FOLDER_TO_HIDE.tar.gpg
-  tar -xvf $FOLDER_TO_HIDE.tar
-  rm $FOLDER_TO_HIDE.tar
+  gpg --decrypt $FOLDER_TO_HIDE.tar.gpg | tar xvf -
 else
   echo "Already open"
 fi
